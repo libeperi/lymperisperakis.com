@@ -1,26 +1,140 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Warm light palette */
+  --bg: #fbf8f2;
+  --bg-surface: #f4ecde;
+  --bg-elevated: #ffffff;
+  --ink: #1b1410;
+  --ink-soft: #423831;
+  --ink-muted: #7a6f62;
+  --ink-faint: #b8ad9e;
+  --rule: #e5dac8;
+  --rule-strong: #cdbfa6;
+  --accent: #b4541a;
+  --accent-hover: #92400e;
+  --accent-soft: #fef3e6;
+  --highlight: #f4a261;
+  --grain-opacity: 0.04;
+}
+
+.dark {
+  /* Warm dark palette */
+  --bg: #141008;
+  --bg-surface: #1e1810;
+  --bg-elevated: #251e14;
+  --ink: #f1e6d2;
+  --ink-soft: #d4c5ac;
+  --ink-muted: #8e8170;
+  --ink-faint: #5a5044;
+  --rule: #2c2419;
+  --rule-strong: #3d3324;
+  --accent: #f5a623;
+  --accent-hover: #fbbf24;
+  --accent-soft: #2a1f10;
+  --highlight: #f4a261;
+  --grain-opacity: 0.06;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-highlight: var(--highlight);
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--rule);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* Subtle paper grain for warmth — applied at body::before */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 220px 220px;
+  mix-blend-mode: multiply;
+}
+
+.dark body::before {
+  mix-blend-mode: screen;
+}
+
+/* Display font with optical sizing — pulls Fraunces toward its display cut */
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 144, "SOFT" 50, "WONK" 0;
+  letter-spacing: -0.02em;
+}
+
+.font-display-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 144, "SOFT" 80;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+  font-feature-settings: "ss02";
+}
+
+/* Hairline rules with a soft glow on the warm background */
+.rule {
+  border-color: var(--rule);
+}
+
+/* Focus rings — warm and visible */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }
