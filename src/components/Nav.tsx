@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 
 const sections = [
@@ -13,6 +14,11 @@ const sections = [
 ];
 
 export default function Nav() {
+  const pathname = usePathname();
+  const isHome = pathname === "/" || pathname === "";
+  const sectionHref = (id: string) => (isHome ? `#${id}` : `/#${id}`);
+  const homeHref = isHome ? "#top" : "/";
+
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>("about");
@@ -25,6 +31,10 @@ export default function Nav() {
   }, []);
 
   useEffect(() => {
+    if (!isHome) {
+      setActive("");
+      return;
+    }
     if (typeof IntersectionObserver === "undefined") return;
     const observer = new IntersectionObserver(
       (entries) => {
@@ -40,7 +50,7 @@ export default function Nav() {
       if (el) observer.observe(el);
     });
     return () => observer.disconnect();
-  }, []);
+  }, [isHome]);
 
   useEffect(() => {
     if (open) document.body.style.overflow = "hidden";
@@ -61,7 +71,7 @@ export default function Nav() {
       >
         <div className="mx-auto max-w-6xl px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
           <Link
-            href="#top"
+            href={homeHref}
             className="group flex items-baseline gap-2"
             aria-label="Lymperis Perakis — home"
           >
@@ -77,7 +87,7 @@ export default function Nav() {
             {sections.map((s) => (
               <a
                 key={s.id}
-                href={`#${s.id}`}
+                href={sectionHref(s.id)}
                 className={`relative px-3 py-2 text-sm font-medium transition-colors ${
                   active === s.id
                     ? "text-ink"
@@ -160,7 +170,7 @@ export default function Nav() {
                 }`}
               >
                 <a
-                  href={`#${s.id}`}
+                  href={sectionHref(s.id)}
                   onClick={() => setOpen(false)}
                   className="group flex items-baseline gap-4 py-2"
                 >

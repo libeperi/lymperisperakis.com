@@ -197,10 +197,11 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: "More soon",
+    title: "Human or animal?",
     blurb:
-      "Selected work I'm proud of will live here — both from work and side-projects. Building this section over the next few weeks.",
-    tags: ["placeholder"],
-    status: "in-progress",
+      "The first AI project I worked on — a tiny CNN that decides whether a scanned figure is a human or an animal. Originally MATLAB; rewrote the training in PyTorch and exported to ONNX so it runs entirely in your browser, with a layer-by-layer walkthrough of the network.",
+    tags: ["PyTorch", "ONNX", "Computer vision", "In-browser"],
+    status: "shipped",
+    href: "/projects/human-or-animal/",
   },
 ];
