@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,54004,t=>{t.q("/_next/static/media/ort.wasm.bundle.min.0a54kisy8khhk.mjs")},24573,t=>{t.q("/_next/static/media/ort-wasm-simd-threaded.0vm4-5te6_fiy.wasm")}]);

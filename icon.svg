@@ -1,0 +1,26 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Lymperis Perakis">
+  <defs>
+    <style>
+      .bg { fill: #fbf8f2; }
+      .ink { fill: #1b1410; }
+      .accent { fill: #b4541a; }
+      @media (prefers-color-scheme: dark) {
+        .bg { fill: #141008; }
+        .ink { fill: #f1e6d2; }
+        .accent { fill: #f5a623; }
+      }
+    </style>
+  </defs>
+
+  <!-- warm card -->
+  <rect width="64" height="64" rx="12" class="bg"/>
+
+  <!-- L upright + P italic accent, placed side-by-side with clear separation.
+       textLength + lengthAdjust forces exact horizontal extents so the bottom
+       serif of L stays clear of the italic P, regardless of system serif metrics. -->
+  <text x="6" y="50" font-family="Georgia, 'Times New Roman', serif" font-weight="500"
+        font-size="44" textLength="22" lengthAdjust="spacingAndGlyphs" class="ink">L</text>
+  <text x="34" y="50" font-family="Georgia, 'Times New Roman', serif" font-style="italic"
+        font-weight="700" font-size="40" textLength="24" lengthAdjust="spacingAndGlyphs"
+        class="accent">P</text>
+</svg>
