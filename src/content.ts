@@ -5,7 +5,7 @@ export const profile = {
   email: "lymperis.perakis@gmail.com",
   phone: "+49 176 31525265",
   linkedin: "https://www.linkedin.com/in/lymperis-perakis/",
-  cv: "/cv.pdf",
+  cv: "/cv/cv.pdf",
   photo: "/summary/profile.jpg",
   intro:
     "AI Engineering Manager with a background in ML systems and backend architecture. I lead cross-functional teams shipping production AI — currently an AI agent that supports electronics design workflows.",

@@ -1,3 +1,5 @@
+import { profile } from "@/content";
+
 const year = new Date().getFullYear();
 
 export default function Footer() {
@@ -15,13 +17,13 @@ export default function Footer() {
         </div>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
           <a
-            href="mailto:lymperis.perakis@gmail.com"
+            href={`mailto:${profile.email}`}
             className="text-ink-soft hover:text-accent transition-colors"
           >
             Email
           </a>
           <a
-            href="https://www.linkedin.com/in/lymperis-perakis/"
+            href={profile.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             className="text-ink-soft hover:text-accent transition-colors"
@@ -29,7 +31,7 @@ export default function Footer() {
             LinkedIn
           </a>
           <a
-            href="/cv.pdf"
+            href={profile.cv}
             className="text-ink-soft hover:text-accent transition-colors"
           >
             CV (PDF)
