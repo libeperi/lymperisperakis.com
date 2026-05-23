@@ -19,6 +19,8 @@ export default function Nav() {
   const sectionHref = (id: string) => (isHome ? `#${id}` : `/#${id}`);
   const homeHref = isHome ? "#top" : "/";
 
+  if (pathname?.startsWith("/redesign")) return null;
+
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>("about");

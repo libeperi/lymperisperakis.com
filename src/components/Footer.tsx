@@ -1,8 +1,14 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { profile } from "@/content";
 
 const year = new Date().getFullYear();
 
 export default function Footer() {
+  const pathname = usePathname();
+  if (pathname?.startsWith("/redesign")) return null;
+
   return (
     <footer className="relative z-[2] mt-24 border-t border-[color:var(--rule)]">
       <div className="mx-auto max-w-6xl px-5 sm:px-8 py-10 flex flex-col sm:flex-row gap-6 sm:gap-4 items-start sm:items-center justify-between">
