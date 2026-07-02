@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
+import ChatPanel from "./chat/ChatPanel";
 
 const sections = [
   { id: "about", label: "About", index: "01" },
@@ -24,6 +25,7 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>("about");
+  const [chatOpen, setChatOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -105,12 +107,45 @@ export default function Nav() {
                 )}
               </a>
             ))}
-            <div className="ml-3 pl-3 border-l border-[color:var(--rule)]">
+            <button
+              type="button"
+              onClick={() => setChatOpen(true)}
+              className="ml-2 inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-ink border border-[color:var(--rule-strong)] hover:border-accent hover:text-accent transition-colors"
+            >
+              <span
+                aria-hidden
+                className="relative flex h-1.5 w-1.5"
+              >
+                <span className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-60 animate-ping" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+              </span>
+              Ask the site
+            </button>
+            <div className="ml-2 pl-3 border-l border-[color:var(--rule)]">
               <ThemeToggle />
             </div>
           </nav>
 
           <div className="flex md:hidden items-center gap-1">
+            <button
+              type="button"
+              onClick={() => setChatOpen(true)}
+              aria-label="Ask the site"
+              className="inline-flex items-center justify-center w-10 h-10 text-ink hover:text-accent transition-colors"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21 12a8 8 0 0 1-11.5 7.2L4 21l1.8-5.5A8 8 0 1 1 21 12z" />
+              </svg>
+            </button>
             <ThemeToggle />
             <button
               type="button"
@@ -199,6 +234,8 @@ export default function Nav() {
           </div>
         </nav>
       </div>
+
+      <ChatPanel open={chatOpen} onClose={() => setChatOpen(false)} />
     </>
   );
 }

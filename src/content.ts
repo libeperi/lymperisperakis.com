@@ -197,6 +197,14 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: "Ask the site",
+    blurb:
+      "A small language model — Gemma 3 or Qwen 3.5, your pick — running entirely in your browser, with this whole site as its system prompt. Ask it about my work, projects, or education; it'll answer from its notes and admit when something isn't in them.",
+    tags: ["WebLLM", "Gemma 3", "Qwen 3.5", "WebGPU", "In-browser"],
+    status: "shipped",
+    href: "/projects/ask-the-site/",
+  },
+  {
     title: "Human or animal?",
     blurb:
       "The first AI project I worked on — a tiny CNN that decides whether a scanned figure is a human or an animal. Originally MATLAB; rewrote the training in PyTorch and exported to ONNX so it runs entirely in your browser, with a layer-by-layer walkthrough of the network.",
