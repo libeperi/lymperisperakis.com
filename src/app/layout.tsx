@@ -4,6 +4,7 @@ import "./globals.css";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import CommandDock from "../components/CommandDock";
+import { Analytics } from "@vercel/analytics/next";
 
 const schibsted = Schibsted_Grotesk({
   variable: "--font-schibsted",
@@ -74,6 +75,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <CommandDock />
+        <Analytics />
       </body>
     </html>
   );

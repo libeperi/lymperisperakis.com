@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "next": "^16.2.6",
     "onnxruntime-web": "^1.26.0",
     "react": "^19.2.6",
