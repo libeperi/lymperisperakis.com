@@ -3,13 +3,13 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import ThemeToggle from "./ThemeToggle";
+import { openChat } from "./CommandDock";
 
 const sections = [
   { id: "about", label: "About", index: "01" },
   { id: "work", label: "Work", index: "02" },
-  { id: "education", label: "Education", index: "03" },
-  { id: "projects", label: "Projects", index: "04" },
+  { id: "projects", label: "Projects", index: "03" },
+  { id: "education", label: "Education", index: "04" },
   { id: "research", label: "Research", index: "05" },
 ];
 
@@ -65,20 +65,20 @@ export default function Nav() {
       <header
         className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
           scrolled
-            ? "bg-[color:var(--bg)]/80 backdrop-blur-md border-b border-[color:var(--rule)]"
+            ? "bg-[#0A0D12]/75 backdrop-blur-md border-b border-white/[0.07]"
             : "bg-transparent border-b border-transparent"
         }`}
       >
-        <div className="mx-auto max-w-6xl px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
+        <div className="mx-auto max-w-5xl px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
           <Link
             href={homeHref}
-            className="group flex items-baseline gap-2"
+            className="group flex items-baseline gap-1.5"
             aria-label="Lymperis Perakis — home"
           >
-            <span className="font-display text-xl sm:text-2xl text-ink tracking-tight">
+            <span className="text-lg sm:text-xl font-bold tracking-[-0.03em] text-ink">
               Lymperis
             </span>
-            <span className="font-display-italic text-xl sm:text-2xl text-accent">
+            <span className="text-lg sm:text-xl font-bold tracking-[-0.03em] au-gradient-text">
               Perakis
             </span>
           </Link>
@@ -89,9 +89,7 @@ export default function Nav() {
                 key={s.id}
                 href={sectionHref(s.id)}
                 className={`relative px-3 py-2 text-sm font-medium transition-colors ${
-                  active === s.id
-                    ? "text-ink"
-                    : "text-ink-muted hover:text-ink"
+                  active === s.id ? "text-ink" : "text-ink-muted hover:text-ink"
                 }`}
               >
                 <span className="font-mono text-[10px] text-ink-faint mr-1.5">
@@ -103,19 +101,34 @@ export default function Nav() {
                 )}
               </a>
             ))}
-            <div className="ml-3 pl-3 border-l border-[color:var(--rule)]">
-              <ThemeToggle />
-            </div>
+            <button
+              type="button"
+              onClick={openChat}
+              className="au-btn ml-2 inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.03] px-4 py-1.5 text-sm font-medium text-ink"
+            >
+              <span aria-hidden className="relative flex h-1.5 w-1.5">
+                <span className="au-ping absolute inline-flex h-full w-full rounded-full bg-highlight" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-highlight" />
+              </span>
+              Ask the site
+            </button>
           </nav>
 
           <div className="flex md:hidden items-center gap-1">
-            <ThemeToggle />
+            <button
+              type="button"
+              onClick={openChat}
+              aria-label="Ask the site"
+              className="inline-flex items-center justify-center w-10 h-10 text-ink hover:text-accent transition-colors"
+            >
+              <span aria-hidden className="text-[17px] leading-none">✦</span>
+            </button>
             <button
               type="button"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
               onClick={() => setOpen((o) => !o)}
-              className="ml-1 inline-flex items-center justify-center w-10 h-10 rounded-md text-ink hover:bg-[color:var(--bg-surface)] transition-colors"
+              className="ml-1 inline-flex items-center justify-center w-10 h-10 rounded-md text-ink hover:bg-white/[0.06] transition-colors"
             >
               <span className="sr-only">Menu</span>
               <svg
@@ -152,7 +165,7 @@ export default function Nav() {
         aria-hidden={!open}
       >
         <div
-          className="absolute inset-0 bg-[color:var(--bg)]/95 backdrop-blur-lg"
+          className="absolute inset-0 bg-[#0A0D12]/95 backdrop-blur-lg"
           onClick={() => setOpen(false)}
         />
         <nav className="relative h-full flex flex-col justify-center px-8">
@@ -164,9 +177,7 @@ export default function Nav() {
                   transitionDelay: open ? `${80 + i * 60}ms` : "0ms",
                 }}
                 className={`transition-all duration-500 ${
-                  open
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-4"
+                  open ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 }`}
               >
                 <a
@@ -174,17 +185,17 @@ export default function Nav() {
                   onClick={() => setOpen(false)}
                   className="group flex items-baseline gap-4 py-2"
                 >
-                  <span className="font-mono text-xs text-ink-muted w-8">
+                  <span className="font-mono text-xs text-ink-faint w-8">
                     {s.index}
                   </span>
-                  <span className="font-display text-4xl sm:text-5xl text-ink group-hover:text-accent transition-colors">
+                  <span className="text-4xl sm:text-5xl font-bold tracking-[-0.03em] text-ink group-hover:text-accent transition-colors">
                     {s.label}
                   </span>
                 </a>
               </li>
             ))}
           </ol>
-          <div className="mt-12 pt-8 border-t border-[color:var(--rule)] flex items-center justify-between text-sm text-ink-muted">
+          <div className="mt-12 pt-8 border-t border-white/[0.08] flex items-center justify-between text-sm text-ink-muted">
             <span className="font-mono text-xs uppercase tracking-widest">
               Munich · DE
             </span>

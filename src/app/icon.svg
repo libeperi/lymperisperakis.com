@@ -1,12 +1,29 @@
 <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Lymperis Perakis">
-  <!-- warm rounded card -->
-  <rect width="64" height="64" rx="12" fill="#fbf8f2"/>
+  <defs>
+    <!-- Aurora glow bleeding in from the top, like the site background -->
+    <radialGradient id="glow" cx="0.5" cy="-0.15" r="0.9">
+      <stop offset="0" stop-color="#22D3EE" stop-opacity="0.38"/>
+      <stop offset="0.55" stop-color="#2DD4BF" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Accent gradient used for the P, same as the wordmark -->
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#34D399"/>
+    </linearGradient>
+  </defs>
 
-  <!-- L upright in ink + P italic accent, side-by-side, shared baseline.
+  <!-- Dark card -->
+  <rect width="64" height="64" rx="14" fill="#0A0D12"/>
+  <rect width="64" height="64" rx="14" fill="url(#glow)"/>
+  <!-- Glass hairline border -->
+  <rect x="0.5" y="0.5" width="63" height="63" rx="13.5" fill="none" stroke="#FFFFFF" stroke-opacity="0.12"/>
+
+  <!-- L upright in ink + P in the accent gradient, shared baseline.
        Fills are set directly (no <style> block) so browsers that disable
        CSS inside SVG favicons still render the letters. -->
-  <text x="1" y="49" font-family="Georgia, 'Times New Roman', serif"
-        font-weight="500" font-size="44" fill="#1b1410">L</text>
-  <text x="30" y="49" font-family="Georgia, 'Times New Roman', serif"
-        font-style="italic" font-weight="700" font-size="43" fill="#b4541a">P</text>
+  <text x="7" y="48" font-family="-apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+        font-weight="700" font-size="40" letter-spacing="-1" fill="#E7EBF3">L</text>
+  <text x="31" y="48" font-family="-apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+        font-weight="700" font-size="40" letter-spacing="-1" fill="url(#accent)">P</text>
 </svg>

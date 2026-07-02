@@ -180,9 +180,9 @@ export default function Demo() {
   return (
     <div className="space-y-12">
       {/* Picker + prediction */}
-      <div className="rounded-2xl border border-[color:var(--rule)] bg-bg-elevated p-6 sm:p-8">
+      <div className="rounded-2xl border border-white/[0.08] bg-bg-surface p-6 sm:p-8">
         <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-          <h2 className="font-mono text-[11px] uppercase tracking-widest text-ink-muted">
+          <h2 className="font-mono text-[11px] uppercase tracking-[0.24em] text-ink-faint">
             Pick a test image
           </h2>
           <StatusPill status={status} error={errorMsg} />
@@ -199,10 +199,10 @@ export default function Demo() {
                 disabled={busy || status === "error"}
                 aria-label={`Classify ${filename}`}
                 aria-pressed={isSelected}
-                className={`group relative aspect-square rounded-lg overflow-hidden border transition-all bg-white ${
+                className={`group relative aspect-square rounded-lg overflow-hidden border transition-all duration-200 bg-white ${
                   isSelected
-                    ? "border-accent ring-2 ring-accent/40"
-                    : "border-[color:var(--rule)] hover:border-accent/60"
+                    ? "border-accent ring-2 ring-accent/40 shadow-[0_0_18px_rgba(34,211,238,0.25)]"
+                    : "border-white/[0.12] hover:border-accent/60 hover:shadow-[0_0_14px_rgba(34,211,238,0.14)]"
                 } disabled:opacity-50 disabled:cursor-not-allowed`}
               >
                 <Image
@@ -219,7 +219,7 @@ export default function Demo() {
         </div>
 
         <div className="mt-8 grid gap-6 sm:grid-cols-[200px_1fr] items-start">
-          <div className="aspect-square w-full max-w-[200px] rounded-xl border border-[color:var(--rule)] bg-white overflow-hidden relative">
+          <div className="aspect-square w-full max-w-[200px] rounded-xl border border-white/[0.12] bg-white overflow-hidden relative">
             {selectedImage ? (
               <Image
                 src={`/projects/human-or-animal/${selectedImage}`}
@@ -265,26 +265,32 @@ function StatusPill({ status, error }: { status: ModelStatus; error: string | nu
   const map: Record<ModelStatus, { label: string; tone: string }> = {
     idle: {
       label: "Initializing",
-      tone: "bg-bg-surface text-ink-muted border-[color:var(--rule-strong)]",
+      tone: "bg-white/[0.03] text-ink-muted border-white/[0.1]",
     },
     loading: {
       label: "Loading model…",
-      tone: "bg-bg-surface text-ink-muted border-[color:var(--rule-strong)]",
+      tone: "bg-accent-soft text-accent border-accent/30",
     },
     ready: {
       label: "Model ready",
-      tone: "bg-accent-soft text-accent border-accent/30",
+      tone: "bg-[#34D399]/10 text-[#34D399] border-[#34D399]/30",
     },
     error: {
       label: error ? `Error — ${error}` : "Error",
-      tone: "bg-bg-surface text-accent border-accent/40",
+      tone: "bg-rose-400/10 text-rose-300 border-rose-400/30",
     },
   };
   const s = map[status];
   return (
     <span
-      className={`font-mono text-[10px] uppercase tracking-widest px-2 py-1 rounded-full border ${s.tone}`}
+      className={`inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full border ${s.tone}`}
     >
+      {status === "ready" && (
+        <span className="relative flex h-1.5 w-1.5" aria-hidden="true">
+          <span className="absolute inline-flex h-full w-full rounded-full bg-[#34D399] opacity-60 motion-safe:animate-ping" />
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#34D399]" />
+        </span>
+      )}
       {s.label}
     </span>
   );
@@ -324,7 +330,7 @@ function ResultPanel({
         <span className="font-mono text-[11px] uppercase tracking-widest text-ink-muted">
           Prediction
         </span>
-        <span className="font-display text-4xl sm:text-5xl text-ink leading-none tracking-tight">
+        <span className="text-4xl sm:text-5xl font-bold text-[#34D399] leading-none tracking-[-0.02em]">
           {label === "human" ? "Human" : "Animal"}
         </span>
         <span className="font-mono text-xs text-ink-muted">{(confidence * 100).toFixed(1)}%</span>
@@ -349,16 +355,16 @@ function ProbBar({ label, value, active }: { label: string; value: number; activ
       <div className="flex items-baseline justify-between mb-1.5">
         <span
           className={`font-mono text-[11px] uppercase tracking-widest ${
-            active ? "text-accent" : "text-ink-muted"
+            active ? "text-[#34D399]" : "text-ink-muted"
           }`}
         >
           {label}
         </span>
         <span className="font-mono text-[11px] text-ink-muted">{(value * 100).toFixed(1)}%</span>
       </div>
-      <div className="h-2 rounded-full bg-bg-surface overflow-hidden">
+      <div className="h-2 rounded-full bg-white/[0.06] overflow-hidden">
         <div
-          className={`h-full ${active ? "bg-accent" : "bg-[color:var(--rule-strong)]"}`}
+          className={`h-full rounded-full transition-[width] duration-300 ${active ? "bg-[#34D399] shadow-[0_0_10px_rgba(52,211,153,0.45)]" : "bg-white/[0.16]"}`}
           style={{ width: `${Math.max(2, value * 100)}%` }}
         />
       </div>
@@ -368,7 +374,7 @@ function ProbBar({ label, value, active }: { label: string; value: number; activ
 
 function Hint({ children, tone = "info" }: { children: React.ReactNode; tone?: "info" | "warn" }) {
   return (
-    <p className={`text-[15px] leading-relaxed ${tone === "warn" ? "text-accent" : "text-ink-soft"}`}>
+    <p className={`text-[15px] leading-relaxed ${tone === "warn" ? "text-rose-300" : "text-ink-soft"}`}>
       {children}
     </p>
   );
@@ -390,9 +396,9 @@ function NetworkExplorer({
   ready: boolean;
 }) {
   return (
-    <div className="rounded-2xl border border-[color:var(--rule)] bg-bg-elevated p-6 sm:p-8">
+    <div className="rounded-2xl border border-white/[0.08] bg-bg-surface p-6 sm:p-8">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
-        <h2 className="font-mono text-[11px] uppercase tracking-widest text-ink-muted">
+        <h2 className="font-mono text-[11px] uppercase tracking-[0.24em] text-ink-faint">
           The network, layer by layer
         </h2>
         <span className="font-mono text-[10px] uppercase tracking-widest text-ink-faint">
@@ -410,11 +416,11 @@ function NetworkExplorer({
       <div className="relative">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 left-0 w-8 z-10 bg-gradient-to-r from-bg-elevated to-transparent"
+          className="pointer-events-none absolute inset-y-0 left-0 w-8 z-10 bg-gradient-to-r from-bg-surface to-transparent"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-bg-elevated to-transparent"
+          className="pointer-events-none absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-bg-surface to-transparent"
         />
         <div className="overflow-x-auto pb-3 -mx-2 px-2">
           <div className="flex items-stretch gap-2 min-w-max">
@@ -435,7 +441,7 @@ function NetworkExplorer({
         </div>
       </div>
 
-      <div className="mt-8 border-t border-[color:var(--rule)] pt-6">
+      <div className="mt-8 border-t border-white/[0.08] pt-6">
         <LayerExpansion
           layer={LAYERS.find((l) => l.id === selected)!}
           result={result}
@@ -463,20 +469,24 @@ function LayerCard({
       type="button"
       onClick={onSelect}
       aria-pressed={isSelected}
-      className={`relative flex flex-col items-stretch w-28 sm:w-32 p-3 rounded-xl border text-left transition-all ${
+      className={`relative flex flex-col items-stretch w-28 sm:w-32 p-3 rounded-xl border text-left transition-all duration-200 ${
         isSelected
-          ? "border-accent bg-accent-soft/40 ring-2 ring-accent/40"
-          : "border-[color:var(--rule)] bg-bg hover:border-accent/50"
+          ? "border-[rgba(34,211,238,0.5)] bg-accent-soft shadow-[0_0_18px_rgba(34,211,238,0.18)]"
+          : "border-white/[0.08] bg-white/[0.02] hover:border-[rgba(34,211,238,0.28)]"
       }`}
     >
-      <span className="font-mono text-[10px] uppercase tracking-widest text-ink-muted">
+      <span
+        className={`font-mono text-[10px] uppercase tracking-widest ${
+          isSelected ? "text-accent" : "text-ink-muted"
+        }`}
+      >
         {layer.name}
       </span>
-      <span className="mt-0.5 font-display text-[13px] sm:text-sm text-ink leading-tight">
+      <span className="mt-0.5 text-[13px] sm:text-sm font-semibold tracking-[-0.01em] text-ink leading-tight">
         {layer.shape}
       </span>
 
-      <div className="mt-3 aspect-square rounded-md bg-bg-surface border border-[color:var(--rule)] overflow-hidden">
+      <div className="mt-3 aspect-square rounded-md bg-bg border border-white/[0.08] overflow-hidden">
         <LayerCardPreview layer={layer} result={result} />
       </div>
     </button>
@@ -506,7 +516,7 @@ function LayerCardPreview({ layer, result }: { layer: LayerSpec; result: Inferen
   if (layer.id === "output") {
     return (
       <div className="w-full h-full flex flex-col items-center justify-center gap-0.5 px-1">
-        <span className="font-display text-3xl text-ink leading-none">2</span>
+        <span className="text-3xl font-bold tracking-[-0.02em] text-ink leading-none">2</span>
         <span className="font-mono text-[9px] uppercase tracking-widest text-ink-muted leading-none">
           softmax
         </span>
@@ -578,7 +588,7 @@ function LayerExpansion({
   if (layer.id === "input") {
     return (
       <div className="grid gap-6 md:grid-cols-[260px_1fr] items-start">
-        <div className="aspect-square w-full max-w-[260px] rounded-xl border border-[color:var(--rule)] bg-bg overflow-hidden">
+        <div className="aspect-square w-full max-w-[260px] rounded-xl border border-white/[0.08] bg-bg overflow-hidden">
           <FeatureCanvas
             data={result.inputPixels}
             height={IMG_SIZE}
@@ -599,7 +609,7 @@ function LayerExpansion({
     const { probs, label } = result;
     return (
       <div className="grid gap-6 md:grid-cols-[260px_1fr] items-start">
-        <div className="rounded-xl border border-[color:var(--rule)] bg-bg p-5 space-y-3">
+        <div className="rounded-xl border border-white/[0.08] bg-bg p-5 space-y-3">
           <ProbBar label="animal" value={probs.animal} active={label === "animal"} />
           <ProbBar label="human" value={probs.human} active={label === "human"} />
         </div>
@@ -661,7 +671,7 @@ function ActivationGrid({ act, layer }: { act: Activation; layer: LayerSpec }) {
         const slice = act.data.subarray(c * stride, (c + 1) * stride);
         return (
           <div key={c} className="relative">
-            <div className="aspect-square rounded-md overflow-hidden bg-bg border border-[color:var(--rule)]">
+            <div className="aspect-square rounded-md overflow-hidden bg-bg border border-white/[0.08]">
               <FeatureCanvas data={slice} height={layer.height} width={layer.width} />
             </div>
             <span className="absolute top-1 left-1 font-mono text-[9px] px-1 py-0.5 rounded bg-bg/70 text-ink-muted">
@@ -733,16 +743,16 @@ function FeatureCanvas({
 }
 
 /**
- * Heatmap matching the site's warm palette: dark navy/brown → warm orange → bright cream.
- * Picked so high activations read as accent-orange against the page background.
+ * Heatmap matching the Aurora palette: deep navy → cyan → near-white.
+ * Picked so high activations read as accent-cyan glow against the page background.
  */
 function heatmapColor(t: number): [number, number, number] {
   const c = Math.max(0, Math.min(1, t));
-  // 3-stop piecewise: deep brown (#1e1810) → accent (#b4541a) → cream (#fbf8f2)
+  // 3-stop piecewise: page bg (#0A0D12) → accent cyan (#22D3EE) → ice white (#ECFEFF)
   const stops: [number, [number, number, number]][] = [
-    [0.0, [30, 24, 16]],
-    [0.55, [180, 84, 26]],
-    [1.0, [251, 248, 242]],
+    [0.0, [10, 13, 18]],
+    [0.55, [34, 211, 238]],
+    [1.0, [236, 254, 255]],
   ];
   for (let i = 0; i < stops.length - 1; i += 1) {
     const [t0, c0] = stops[i];

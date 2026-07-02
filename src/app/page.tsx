@@ -1,8 +1,8 @@
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import Work from "@/components/sections/Work";
-import Education from "@/components/sections/Education";
 import Projects from "@/components/sections/Projects";
+import Education from "@/components/sections/Education";
 import Research from "@/components/sections/Research";
 
 export default function Home() {
@@ -11,8 +11,8 @@ export default function Home() {
       <Hero />
       <About />
       <Work />
-      <Education />
       <Projects />
+      <Education />
       <Research />
     </>
   );

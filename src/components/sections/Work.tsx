@@ -1,78 +1,50 @@
-import SectionHeader from "../SectionHeader";
 import { career } from "@/content";
+import { Section, Kicker, Tag } from "@/components/aurora";
 
 export default function Work() {
   return (
-    <section id="work" className="scroll-mt-24 py-20 sm:py-28 bg-[color:var(--bg-surface)]/40">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <SectionHeader
-          index="02"
-          kicker="Work"
-          title={
-            <>
-              Roles &amp;{" "}
-              <span className="font-display-italic text-accent">trajectory.</span>
-            </>
-          }
-          description="From research to leadership — the path that brought me to managing engineering teams."
-        />
-
-        <ol className="relative">
-          {career.map((role, i) => (
-            <li
-              key={i}
-              className="group relative grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-4 sm:gap-10 py-8 sm:py-10 border-t border-[color:var(--rule)] last:border-b"
-            >
-              {/* Hover accent bar */}
-              <span className="absolute left-0 top-0 h-px w-0 bg-accent transition-all duration-500 group-hover:w-full" />
-
-              {/* Period */}
-              <div className="flex sm:flex-col items-start sm:items-start gap-2 sm:gap-1">
-                <span className="font-mono text-xs text-ink-muted uppercase tracking-widest">
-                  {role.period}
-                </span>
-                {role.tag && (
-                  <span className="font-mono text-[10px] px-2 py-0.5 rounded-full border border-[color:var(--rule-strong)] text-ink-muted">
-                    {role.tag}
-                  </span>
-                )}
+    <Section id="work" label="Work experience">
+      <Kicker n="02" label="Work" />
+      <ol className="relative ml-1.5 space-y-8 border-l border-white/[0.08] pl-8 sm:space-y-10">
+        {career.map((role) => (
+          <li key={`${role.company}-${role.role}`} className="relative">
+            <span
+              aria-hidden="true"
+              className="au-node absolute -left-[37.5px] top-7 h-2.5 w-2.5 rounded-full bg-accent"
+            />
+            <article className="au-card rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-7">
+              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1.5">
+                <h3 className="text-lg font-semibold tracking-[-0.01em]">
+                  {role.role}
+                  <span className="text-ink-muted"> · {role.company}</span>
+                </h3>
+                <p className="font-mono text-[11.5px] uppercase tracking-[0.1em] text-ink-faint">
+                  {role.period} · {role.location}
+                </p>
               </div>
-
-              {/* Role */}
-              <div>
-                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-1">
-                  <h3 className="font-display text-2xl sm:text-3xl text-ink leading-tight tracking-tight">
-                    {role.role}
-                  </h3>
-                </div>
-                <div className="flex items-baseline gap-2 mb-4">
-                  <span className="font-display-italic text-lg text-accent">
-                    {role.company}
-                  </span>
-                  <span className="text-ink-muted text-sm">·</span>
-                  <span className="font-mono text-xs text-ink-muted uppercase tracking-widest">
-                    {role.location}
-                  </span>
-                </div>
-                <ul className="space-y-2 text-ink-soft">
-                  {role.highlights.map((h, j) => (
-                    <li
-                      key={j}
-                      className="flex gap-3 leading-relaxed text-[15px]"
-                    >
-                      <span
-                        aria-hidden
-                        className="select-none mt-2 inline-block h-1 w-3 shrink-0 bg-[color:var(--rule-strong)] group-hover:bg-accent transition-colors"
-                      />
-                      <span>{h}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
+              {role.tag && (
+                <p className="mt-3">
+                  <Tag>{role.tag}</Tag>
+                </p>
+              )}
+              <ul className="mt-4 space-y-2.5">
+                {role.highlights.map((h) => (
+                  <li
+                    key={h}
+                    className="flex gap-3 text-[14.5px] leading-relaxed text-ink-muted"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="mt-[9px] h-1 w-1 shrink-0 rounded-full bg-accent/60"
+                    />
+                    {h}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </li>
+        ))}
+      </ol>
+    </Section>
   );
 }

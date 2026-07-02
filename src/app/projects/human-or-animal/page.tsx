@@ -9,34 +9,51 @@ export const metadata: Metadata = {
     "An in-browser revival of the first AI project I worked on (2018, MATLAB). A tiny CNN classifies a scanned figure as human or animal, running entirely on your device via ONNX Runtime Web.",
 };
 
+function Kicker({ label }: { label: string }) {
+  return (
+    <div className="mb-4 flex items-center gap-4">
+      <h2 className="font-mono text-[11px] font-medium uppercase tracking-[0.24em] text-ink-faint">
+        {label}
+      </h2>
+      <span aria-hidden="true" className="h-px flex-1 bg-white/[0.08]" />
+    </div>
+  );
+}
+
 export default function HumanOrAnimalPage() {
   return (
     <div className="pt-28 pb-24 sm:pt-32">
+      <style>{riseCss}</style>
       <div className="mx-auto max-w-5xl px-5 sm:px-8">
-        <div className="mb-10">
+        <div className="au-rise mb-10">
           <Link
             href="/#projects"
-            className="font-mono text-[11px] uppercase tracking-widest text-ink-muted hover:text-accent transition-colors"
+            className="font-mono text-[11px] uppercase tracking-[0.24em] text-ink-muted hover:text-accent transition-colors duration-200"
           >
             ← Back to projects
           </Link>
         </div>
 
-        <header className="mb-14">
-          <div className="flex items-center gap-3 mb-5">
-            <span className="font-mono text-xs text-accent tracking-widest">
+        <header className="au-rise mb-14" style={{ animationDelay: "0.08s" }}>
+          <div className="mb-5 flex items-center gap-3">
+            <span className="font-mono text-[11px] uppercase tracking-[0.24em] text-accent">
               2018 → 2026
             </span>
-            <span className="h-px flex-1 bg-[color:var(--rule-strong)] max-w-[80px]" />
-            <span className="font-mono text-[11px] text-ink-muted uppercase tracking-[0.18em]">
+            <span
+              aria-hidden="true"
+              className="h-px max-w-[80px] flex-1 bg-white/[0.16]"
+            />
+            <span className="font-mono text-[11px] uppercase tracking-[0.24em] text-ink-faint">
               First AI Project
             </span>
           </div>
-          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl text-ink leading-[1.05] tracking-tight">
+          <h1 className="text-4xl font-bold leading-[1.05] tracking-[-0.03em] text-ink sm:text-5xl md:text-6xl">
             Human{" "}
-            <span className="font-display-italic text-accent">or</span> animal?
+            <span className="bg-gradient-to-r from-[#22D3EE] to-[#34D399] bg-clip-text text-transparent">
+              or animal?
+            </span>
           </h1>
-          <p className="mt-6 text-base sm:text-lg text-ink-soft max-w-2xl leading-relaxed">
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-ink-soft sm:text-lg">
             The first AI project I worked on — a tiny CNN written in MATLAB. It
             took a scanned page from a rock-art catalogue and guessed, figure
             by figure, whether each was a person or an animal. Years later I
@@ -47,14 +64,14 @@ export default function HumanOrAnimalPage() {
           </p>
         </header>
 
-        <Demo />
+        <div className="au-rise" style={{ animationDelay: "0.16s" }}>
+          <Demo />
+        </div>
 
-        <section className="mt-20 grid gap-10 sm:grid-cols-2">
-          <div>
-            <h2 className="font-mono text-[11px] uppercase tracking-widest text-ink-muted mb-3">
-              The model
-            </h2>
-            <p className="text-ink-soft leading-relaxed text-[15px]">
+        <section className="mt-20 grid gap-5 sm:grid-cols-2">
+          <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 transition-[border-color,box-shadow] duration-300 hover:border-[rgba(34,211,238,0.28)] hover:shadow-[0_12px_44px_-14px_rgba(34,211,238,0.16)] sm:p-7">
+            <Kicker label="The model" />
+            <p className="text-[15px] leading-relaxed text-ink-soft">
               Three convolutional blocks (8 → 16 → 32 filters), each followed by
               batch normalization and ReLU, with max-pooling between them. A
               single fully-connected layer maps the 80&nbsp;000-dim flattened
@@ -63,11 +80,9 @@ export default function HumanOrAnimalPage() {
               the 90% the original MATLAB version reached.
             </p>
           </div>
-          <div>
-            <h2 className="font-mono text-[11px] uppercase tracking-widest text-ink-muted mb-3">
-              The data
-            </h2>
-            <p className="text-ink-soft leading-relaxed text-[15px]">
+          <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 transition-[border-color,box-shadow] duration-300 hover:border-[rgba(34,211,238,0.28)] hover:shadow-[0_12px_44px_-14px_rgba(34,211,238,0.16)] sm:p-7">
+            <Kicker label="The data" />
+            <p className="text-[15px] leading-relaxed text-ink-soft">
               196 grayscale figures (98 humans, 98 animals), all extracted from
               scanned plates of a rock-art catalogue. The ten images in the
               picker are unseen — carved out of the pool before training so
@@ -77,10 +92,8 @@ export default function HumanOrAnimalPage() {
         </section>
 
         <section className="mt-16">
-          <h2 className="font-mono text-[11px] uppercase tracking-widest text-ink-muted mb-3">
-            Building the training set
-          </h2>
-          <p className="text-ink-soft leading-relaxed text-[15px] max-w-3xl mb-10">
+          <Kicker label="Building the training set" />
+          <p className="mb-10 max-w-3xl text-[15px] leading-relaxed text-ink-soft">
             The raw inputs were two-page spreads from a rock-art catalogue —
             line and stipple drawings of figures from sites in southern Africa,
             several per page. The MATLAB script{" "}
@@ -154,14 +167,14 @@ export default function HumanOrAnimalPage() {
 
           <div className="mt-12">
             <div className="flex items-baseline gap-3 mb-2">
-              <span className="font-mono text-xs text-accent tracking-widest">
+              <span className="font-mono text-xs tracking-[0.24em] text-accent">
                 06
               </span>
-              <h3 className="font-display text-2xl text-ink leading-tight">
+              <h3 className="text-2xl font-semibold leading-tight tracking-[-0.02em] text-ink">
                 Resize, invert, save
               </h3>
             </div>
-            <p className="text-[14px] text-ink-soft leading-relaxed mb-6 max-w-3xl">
+            <p className="mb-6 max-w-3xl text-[14px] leading-relaxed text-ink-soft">
               Each surviving figure is resized to{" "}
               <span className="font-mono text-ink">200×200</span>, inverted back
               so the figure reads dark on light, and saved as a PNG. From this
@@ -171,14 +184,14 @@ export default function HumanOrAnimalPage() {
               {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
                 <div
                   key={i}
-                  className="aspect-square rounded-md border border-[color:var(--rule)] bg-white overflow-hidden"
+                  className="aspect-square overflow-hidden rounded-md border border-white/[0.08] bg-white"
                 >
                   <Image
                     src={`/projects/human-or-animal/pipeline/06-extracted-${String(i).padStart(2, "0")}.png`}
                     alt={`Extracted figure ${i}`}
                     width={200}
                     height={200}
-                    className="w-full h-full object-contain p-1"
+                    className="h-full w-full object-contain p-1"
                     unoptimized
                   />
                 </div>
@@ -186,16 +199,16 @@ export default function HumanOrAnimalPage() {
             </div>
           </div>
 
-          <div className="mt-12 rounded-2xl border border-[color:var(--rule)] bg-bg-elevated p-6 sm:p-8">
+          <div className="mt-12 rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 transition-[border-color,box-shadow] duration-300 hover:border-[rgba(34,211,238,0.28)] hover:shadow-[0_12px_44px_-14px_rgba(34,211,238,0.16)] sm:p-8">
             <div className="flex items-baseline gap-3 mb-3">
-              <span className="font-mono text-xs text-accent tracking-widest">
+              <span className="font-mono text-xs tracking-[0.24em] text-accent">
                 07
               </span>
-              <h3 className="font-display text-2xl text-ink leading-tight">
+              <h3 className="text-2xl font-semibold leading-tight tracking-[-0.02em] text-ink">
                 Then, by hand
               </h3>
             </div>
-            <p className="text-[14px] text-ink-soft leading-relaxed mb-3 max-w-3xl">
+            <p className="mb-3 max-w-3xl text-[14px] leading-relaxed text-ink-soft">
               The script could find figures, but it had no idea what they
               were. So I went through the resulting pile of crops one by one
               and dropped each into a{" "}
@@ -203,7 +216,7 @@ export default function HumanOrAnimalPage() {
               <span className="font-mono text-ink">animal/</span> folder.
               That manual sort is the label.
             </p>
-            <p className="text-[14px] text-ink-soft leading-relaxed max-w-3xl">
+            <p className="max-w-3xl text-[14px] leading-relaxed text-ink-soft">
               Crops that belonged to neither — the small site sketches above,
               decorative borders, stray ink — were simply dropped. After ~200
               pages, 98 humans and 98 animals were left. The model only ever
@@ -213,10 +226,8 @@ export default function HumanOrAnimalPage() {
         </section>
 
         <section className="mt-14">
-          <h2 className="font-mono text-[11px] uppercase tracking-widest text-ink-muted mb-3">
-            Why it&apos;s here
-          </h2>
-          <p className="text-ink-soft leading-relaxed text-[15px] max-w-3xl">
+          <Kicker label="Why it's here" />
+          <p className="max-w-3xl text-[15px] leading-relaxed text-ink-soft">
             Mostly nostalgia. The MATLAB version came as a Windows/Mac
             installer; you had to download, unzip and launch it. Putting the
             same network on the web — same architecture, same training set,
@@ -245,17 +256,17 @@ function PipelineStep({
   return (
     <li>
       <div className="flex items-baseline gap-3 mb-3">
-        <span className="font-mono text-xs text-accent tracking-widest">
+        <span className="font-mono text-xs tracking-[0.24em] text-accent">
           {n}
         </span>
-        <h3 className="font-display text-2xl text-ink leading-tight">
+        <h3 className="text-2xl font-semibold leading-tight tracking-[-0.02em] text-ink">
           {title}
         </h3>
       </div>
-      <p className="text-[14px] text-ink-soft leading-relaxed mb-4 max-w-3xl">
+      <p className="mb-4 max-w-3xl text-[14px] leading-relaxed text-ink-soft">
         {caption}
       </p>
-      <div className="rounded-2xl border border-[color:var(--rule)] bg-white overflow-hidden">
+      <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-white">
         <Image
           src={src}
           alt={alt}
@@ -268,3 +279,17 @@ function PipelineStep({
     </li>
   );
 }
+
+const riseCss = `
+@keyframes au-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.au-rise {
+  opacity: 0;
+  animation: au-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .au-rise { animation: none; opacity: 1; }
+}
+`;
